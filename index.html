@@ -1,18 +1,17 @@
 <html>
   <head>
-    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   </head>
   <body>
     <a-scene>
-      <a-camera>
-        <a-cursor></a-cursor>
-      </a-camera>
-      <!-- Camera (listener for 3D audio) -->
-      <a-entity camera look-controls wasd-controls></a-entity>
+      <!-- Camera (listener) -->
+      <a-entity camera look-controls wasd-controls position="0 1.6 0"></a-entity>
 
-      <!-- Clickable box with sound -->
-      <a-box position="0 1.5 -3" color="tomato"
-             sound="src: url(https://github.com/TBNRJester/Sharingan/raw/refs/heads/main/Voicy_sharingan.mp3); on: click">
+      <!-- Box with sound -->
+      <a-box position="0 1.5 -2" color="tomato"
+             sound="src: url(https://github.com/TBNRJester/Sharingan/raw/refs/heads/main/Voicy_sharingan.mp3);
+                    on: click;
+                    volume: 5;">
       </a-box>
 
       <a-sky color="#ECECEC"></a-sky>
