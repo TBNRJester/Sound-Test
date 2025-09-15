@@ -4,26 +4,20 @@
   </head>
   <body>
     <a-scene>
-      <!-- Camera -->
+        <a-camera>
+            <a-cursor></a-cursor>
+        </a-camera>
+      <!-- Camera (listener) -->
       <a-entity camera look-controls wasd-controls position="0 1.6 0"></a-entity>
 
-      <!-- Background sound -->
-      <a-entity id="bg-sound"
-                sound="src: url(https://github.com/TBNRJester/Sharingan/raw/refs/heads/main/Voicy_sharingan.mp3);
-                       autoplay: false;
-                       loop: true;
-                       volume: 5;">
-      </a-entity>
+      <!-- Box with sound -->
+      <a-box position="0 1.5 -2" color="tomato"
+             sound="src: url(https://github.com/TBNRJester/Sharingan/raw/refs/heads/main/Sharingan.mp3.mp3);
+                    on: click;
+                    volume: 5;">
+      </a-box>
 
-      <a-box position="0 1.5 -2" color="tomato"></a-box>
       <a-sky color="#ECECEC"></a-sky>
     </a-scene>
-
-    <script>
-      // Start sound after first user click
-      document.body.addEventListener('click', () => {
-        document.querySelector('#bg-sound').components.sound.playSound();
-      }, { once: true });
-    </script>
   </body>
 </html>
