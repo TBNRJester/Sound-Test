@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>A-Frame sound example</title>
-    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
     <style>body { margin: 0; }</style>
   </head>
   <body>
@@ -11,15 +11,14 @@
       <!-- Preload the audio in a-assets. crossorigin can help when fetching from another origin. -->
       <a-assets>
         <!-- Primary URL you gave -->
-        <audio id="sharingan-audio" crossorigin="anonymous"
-               src="https://github.com/TBNRJester/Sharingan/raw/refs/heads/main/Sharingan.mp3">
+        <!--<audio id="sharingan-audio" crossorigin="anonymous"
+               src="https://github.com/TBNRJester/Sharingan/raw/refs/heads/main/Sharingan.mp3">-->
         </audio>
 
         <!-- Alternate (often more CORS-friendly) raw.githubusercontent.com style:
-             Uncomment this line and comment the line above if you get CORS errors.
+             Uncomment this line and comment the line above if you get CORS errors.-->
         <audio id="sharingan-audio" crossorigin="anonymous"
                src="https://raw.githubusercontent.com/TBNRJester/Sharingan/main/Sharingan.mp3"></audio>
-        -->
       </a-assets>
 
       <!-- camera / cursor so you can click in VR -->
@@ -37,7 +36,7 @@
       <!-- Attach the sound component, referencing the preloaded <audio> by id -->
       <!-- positional: true = 3D positional audio; set to false for non-positional (global) -->
       <a-entity id="soundEntity"
-                sound="src: #sharingan-audio; autoplay: false; loop: true; positional: true; volume: 1"
+                sound="src: #sharingan-audio; autoplay: false; loop: true; positional: true; volume: 10"
                 position="0 1.6 -3">
       </a-entity>
 
@@ -61,6 +60,9 @@
 
       window.addEventListener('click', tryPlay);
       window.addEventListener('touchstart', tryPlay);
+      document.querySelector('#speaker').addEventListener('click', () => {
+  soundEntity.components.sound.playSound();
+});
     </script>
   </body>
 </html>
