@@ -1,23 +1,66 @@
+<!doctype html>
 <html>
   <head>
-    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <meta charset="utf-8" />
+    <title>A-Frame sound example</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <style>body { margin: 0; }</style>
   </head>
   <body>
     <a-scene>
+      <!-- Preload the audio in a-assets. crossorigin can help when fetching from another origin. -->
+      <a-assets>
+        <!-- Primary URL you gave -->
+        <audio id="sharingan-audio" crossorigin="anonymous"
+               src="https://github.com/TBNRJester/Sharingan/raw/refs/heads/main/Sharingan.mp3">
+        </audio>
+
+        <!-- Alternate (often more CORS-friendly) raw.githubusercontent.com style:
+             Uncomment this line and comment the line above if you get CORS errors.
+        <audio id="sharingan-audio" crossorigin="anonymous"
+               src="https://raw.githubusercontent.com/TBNRJester/Sharingan/main/Sharingan.mp3"></audio>
+        -->
+      </a-assets>
+
+      <!-- camera / cursor so you can click in VR -->
+      <a-entity id="cameraRig">
         <a-camera>
-            <a-cursor></a-cursor>
+          <a-cursor></a-cursor>
         </a-camera>
-      <!-- Camera (listener) -->
-      <a-entity camera look-controls wasd-controls position="0 1.6 0"></a-entity>
+      </a-entity>
 
-      <!-- Box with sound -->
-      <a-box position="0 1.5 -2" color="tomato"
-             sound="src: url(https://github.com/TBNRJester/Sharingan/raw/refs/heads/main/Sharingan.mp3.mp3);
-                    on: click;
-                    volume: 5;">
-      </a-box>
+      <!-- A visible object to attach the sound to -->
+      <a-sphere id="speaker" position="0 1.6 -3" radius="0.6" roughness="1" metalness="0"
+                material="color: #222;">
+      </a-sphere>
 
-      <a-sky color="#ECECEC"></a-sky>
+      <!-- Attach the sound component, referencing the preloaded <audio> by id -->
+      <!-- positional: true = 3D positional audio; set to false for non-positional (global) -->
+      <a-entity id="soundEntity"
+                sound="src: #sharingan-audio; autoplay: false; loop: true; positional: true; volume: 1"
+                position="0 1.6 -3">
+      </a-entity>
+
+      <!-- small floor for context -->
+      <a-plane rotation="-90 0 0" width="10" height="10" color="#7BC8A4"></a-plane>
     </a-scene>
+
+    <script>
+      // Many browsers require a user gesture to start audio. We'll start on first user click.
+      const soundEntity = document.querySelector('#soundEntity');
+
+      function tryPlay() {
+        // start playing via the sound component API
+        if (!soundEntity.components.sound.isPlaying) {
+          soundEntity.components.sound.playSound();
+        }
+        // remove the listener after first gesture
+        window.removeEventListener('click', tryPlay);
+        window.removeEventListener('touchstart', tryPlay);
+      }
+
+      window.addEventListener('click', tryPlay);
+      window.addEventListener('touchstart', tryPlay);
+    </script>
   </body>
 </html>
